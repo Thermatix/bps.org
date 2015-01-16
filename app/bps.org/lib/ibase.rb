@@ -13,7 +13,6 @@ module BPS
 			end
 			
 			
-
 			def self.included(base)
 				base.extend Singleton_Methods
 				base.instance_variable_set :@store, {}

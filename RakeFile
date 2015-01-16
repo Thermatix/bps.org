@@ -1,0 +1,6 @@
+require 'rspec/core/rake_task'
+require 'bundler/version'
+require './tasks/r_support'
+require 'erb'
+
+Dir['tasks/*.rake'].sort.each { |f| load f }

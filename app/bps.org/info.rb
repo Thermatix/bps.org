@@ -11,5 +11,8 @@ module BPS
 		set :host, '0.0.0.0'
 		set :port, '3000'
 		set :logfile, "#{self[:p_root]}/#{self[:short_name]}.log"
+
 	end
 end
+
+

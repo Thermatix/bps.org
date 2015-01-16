@@ -26,18 +26,17 @@ module BPS
 		files = files.flatten
 					 .push("#{Info[:root]}/main")
 		files.each do |file|
-			Log[:info] = "loading #{File.basename(file,'.rb')}"
-			require file
+			if require file
+				Log[:info] = "loading #{File.basename(file,'.rb')}"
+			end
+			
 		end
 
 		Log[:info] = [
 			'File loading finished',
 			"Sinatra will run on: #{Info[:host]}:#{Info[:port]}"
 		]
-		Log[:asd] = {
-			info: 'asdsad',
-			fatal: 'sadad'
-		}
+
 	rescue Exception => err
 		Log[:fatal] = [
 			"Boot Failure \n error=#{err}",
