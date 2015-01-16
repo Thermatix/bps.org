@@ -10,13 +10,18 @@ module BPS
 					def set key, value
 						@store[key] = value
 					end
-				end
+			end
+			
+			
+
+			def self.included(base)
+				base.extend Singleton_Methods
+				base.instance_variable_set :@store, {}
 			end
 
-		def self.included(base)
-			base.extend Singleton_Methods
-			base.instance_variable_set :@store, {}
-		end
-
-		end
+			def self.includes_hooks?
+		    	true
+		  	end
+	  	end
+	end
 end
