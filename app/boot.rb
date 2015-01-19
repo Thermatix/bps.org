@@ -1,14 +1,15 @@
-require 'sinatra/base'
+require 'sinatra'
 require 'sinatra/form_helpers'
+require "sinatra/namespace"
+require 'sinatra/assetpack'
+require 'yui/compressor'
 require 'yaml'
 require 'json'
  
 
 
 root = "#{File.dirname(File.realpath(__FILE__))}/bps.org"
-
 require "#{root}/lib/loader"
-
 BPS::Loader.pre_load self,root, %w( info lib/logging lib/covered )
 
 module BPS

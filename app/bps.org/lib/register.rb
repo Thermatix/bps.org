@@ -1,5 +1,5 @@
 module BPS
-	module Register
+	module Sinatra_Register
 		module Singleton_Methods
 
 			def check_const const

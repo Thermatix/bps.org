@@ -1,8 +1,11 @@
 module BPS
 	class App < ::Sinatra::Base
-		include Register
+		include Sinatra_Register
 		include Covered
-		cover do
+
+		set_logger Log.logger
+
+		cover :fatal do
 		  	set :show_exceptions, true
 		  	set :root, Info[:root]
 		  	set :threaded, false
@@ -20,8 +23,17 @@ module BPS
 		    	set :bind, Info[:host],Info[:port]
 		    	set :show_exceptions, false
 		  	end
+
 		  	register_modules :helpers, Info[:helpers]
 		  	register_modules :register,Info[:routing]
+
+		  	assets {
+		  		serve '/javascripts', from: "#{Info[:public]}/javascripts"
+		  		serve '/css',  from: "#{Info[:public]}/css"
+		  		serve '/images', from: "#{Info[:public]}/images"
+		  		css_compression :sass
+		  		js_compression  :yui, :munge => true 
+		  	}
 		end
 	end
 end
