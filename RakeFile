@@ -1,6 +1,8 @@
 require 'rspec/core/rake_task'
-require 'bundler/version'
-require './tasks/r_support'
+# require './tasks/r_support'
 require 'erb'
-
+require './app/bps.org/info'
+APP_FILE  = "#{Info[:root]}/main.rb"
+APP_CLASS = 'BPS::App'
+require 'sinatra/assetpack/rake'
 Dir['tasks/*.rake'].sort.each { |f| load f }

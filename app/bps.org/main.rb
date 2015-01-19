@@ -27,13 +27,14 @@ module BPS
 		  	register_modules :helpers, Info[:helpers]
 		  	register_modules :register,Info[:routing]
 
-		  	assets {
+		  	assets do
 		  		serve '/javascripts', from: "#{Info[:public]}/javascripts"
 		  		serve '/css',  from: "#{Info[:public]}/css"
 		  		serve '/images', from: "#{Info[:public]}/images"
+
 		  		css_compression :sass
 		  		js_compression  :yui, :munge => true 
-		  	}
+		  	end
 		end
 	end
 end

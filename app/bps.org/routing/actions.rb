@@ -4,11 +4,10 @@ module BPS
 			module Actions
 
 				include  Covered
-				set_logger Log
+				set_logger Log.logger
 
 				cover do
 					def self.registered app
-
 
 
 					end
