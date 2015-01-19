@@ -15,18 +15,15 @@ module BPS
 				begin
 					yield
 				rescue Exception => err
+					fatal = (override == :fatal)
 					[
 			            "#{err}",
 			            "stacktrace=#{err.backtrace.join("\n")}"
 			        ].each do |line|
-			        	if override != :fatal
-			        		puts line
-			        	end
+			        	puts line unless fatal
 			        	logger.send override || :error, line
 			        end
-			        if override == :fatal
-			        	raise 
-			        end
+			        raise if fatal
 				end
 			end
 
