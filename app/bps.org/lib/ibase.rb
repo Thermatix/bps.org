@@ -1,9 +1,19 @@
 module BPS
 	module Base
-		module IBase
+		class IBase
+			
 			module Singleton_Methods
+
+				def scope
+					yield
+				end
+				
 				def [](key)
 					@store[key]
+				end
+
+				def display
+					@store.inspect
 				end
 
 				private
@@ -13,13 +23,13 @@ module BPS
 			end
 			
 			
-			def self.included(base)
-				base.extend Singleton_Methods
+			def self.inherited(base)
 				base.instance_variable_set :@store, {}
+				base.extend Singleton_Methods
 			end
 
 			def self.includes_hooks?
-		    	true
+		    	%w(inherited)
 		  	end
 	  	end
 	end

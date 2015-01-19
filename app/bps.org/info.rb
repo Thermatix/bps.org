@@ -1,8 +1,7 @@
 require_relative 'lib/ibase'
 
 module BPS
-	module Info  
-		include Base::IBase
+	class Info < Base::IBase
 		set :version, '0.0.0'
 		set :name, 'Barking Photographic Society Website'
 		set :short_name, 'BPS.org'
@@ -11,7 +10,8 @@ module BPS
 		set :host, '0.0.0.0'
 		set :port, '3000'
 		set :logfile, "#{self[:p_root]}/#{self[:short_name]}.log"
-
+		set :helpers, %w( FormHelpers App::Helpers)
+		set :routing, %w( App::Api App::Actions)
 	end
 end
 

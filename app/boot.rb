@@ -1,47 +1,37 @@
-require 'sinatra'
+require 'sinatra/base'
 require 'sinatra/form_helpers'
 require 'yaml'
 require 'json'
+ 
 
 
+root = "#{File.dirname(File.realpath(__FILE__))}/bps.org"
 
-root = File.dirname(File.realpath(__FILE__))
-%w( info lib/logging).each do |file|
-	require "#{root}/bps.org/#{file}"
-end
+require "#{root}/lib/loader"
+
+BPS::Loader.pre_load self,root, %w( info lib/logging lib/covered )
 
 module BPS
-	begin
+	include Covered
+	Log.create Info[:short_name],Info[:logfile]
+	set_logger Log.logger
+	cover :fatal do
+
 		Log[:info] = [
 			'booting...',
 			'loading files...'
 		]
-		folder_list = %w(lib models helpers routing)
-		files = []
 		
-
-		folder_list.each do |folder|
-			files << Dir.glob("#{Info[:root]}/#{folder}/*.rb")
-		end
-		files = files.flatten
-					 .push("#{Info[:root]}/main")
-		files.each do |file|
-			if require file
-				Log[:info] = "loading #{File.basename(file,'.rb')}"
-			end
-			
-		end
+		Loader.set_up Info[:root], Log.logger 
+		Loader.get_list %w(lib models helpers routing)
+		Loader.append_file 'main'
+		Loader.require_files self
 
 		Log[:info] = [
 			'File loading finished',
 			"Sinatra will run on: #{Info[:host]}:#{Info[:port]}"
 		]
 
-	rescue Exception => err
-		Log[:fatal] = [
-			"Boot Failure \n error=#{err}",
-			"Stacktrace=#{err.backtrace.join("\n")}"
-		]
-		raise
+
 	end
 end
