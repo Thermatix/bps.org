@@ -11,7 +11,6 @@ module BPS
 						app.get '/' do
 							erb :index
 						end
-
 					end
 				end
 
