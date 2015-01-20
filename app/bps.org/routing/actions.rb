@@ -8,7 +8,9 @@ module BPS
 
 				cover do
 					def self.registered app
-
+						app.get '/' do
+							erb :index
+						end
 
 					end
 				end

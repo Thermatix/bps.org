@@ -7,12 +7,11 @@ module BPS
 				set_logger Log.logger
 
 				cover do
-					namespace '/api' do
+					# namespace '/api' do
 						def self.registered app
-							Log[:info] = "#{self} registering"
 
 						end
-					end
+					# end
 				end
 
 			end

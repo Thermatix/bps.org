@@ -3,6 +3,7 @@ require 'sinatra/form_helpers'
 require "sinatra/namespace"
 require 'sinatra/assetpack'
 require 'yui/compressor'
+require 'sass'
 require 'yaml'
 require 'json'
  
@@ -25,6 +26,7 @@ module BPS
 		
 		Loader.set_up Info[:root], Log.logger 
 		Loader.get_list %w(lib models helpers routing)
+		Loader.append_file 'settings'
 		Loader.append_file 'main'
 		Loader.require_files self
 

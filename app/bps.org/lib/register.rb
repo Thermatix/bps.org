@@ -11,8 +11,11 @@ module BPS
 			end
 
 
-			def register_modules method, modules
+			def register_modules method, modules, logger
 				modules.each do |mod|
+					msg = "registering #{mod}"
+					puts msg
+					self.logger.info msg if self.logger
 					self.send method, check_const(mod) 
 				end
 			end

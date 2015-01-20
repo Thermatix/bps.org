@@ -65,7 +65,7 @@ module BPS
 					l = logger || self.logger || nil
 					if self.send method, file
 						if l
-							msg = "loading #{File.basename(file,'.rb')}"
+							msg = "loaded #{File.basename(file,'.rb')}"
 							puts msg
 							l.info msg
 						end
