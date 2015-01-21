@@ -1,19 +1,25 @@
-module BPS
-	module ::Sinatra
-		module App
-			module Helpers
 
-				def render(*args)
-			    	if args.first.is_a?(Hash) && args.first.keys.include?(:partial)
-			        	erb "_#{args.first[:partial]}".to_sym, :layout => false
-			      	else
-			        	super
-			        end
-			    end
+module Sinatra
+	module App
+		module Helpers
 
+			def render(*args)
+		    	if args.first.is_a?(Hash) && args.first.keys.include?(:partial)
+		        	erb "_#{args.first[:partial]}".to_sym, :layout => false
+		      	else
+		        	super
+		        end
+		    end
+
+		    def url_for name
+				Route.instance_variable_get(
+					:@routes
+					)[name]
 			end
 
 		end
-		register App::Helpers
+
 	end
+	register App::Helpers
 end
+

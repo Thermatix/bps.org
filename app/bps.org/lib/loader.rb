@@ -40,12 +40,10 @@ module BPS
 
 			def pre_load context,root, file_list, logger=nil
 				puts 'pre-loading files'
-				logger.info = 'pre-loading files' if logger
-				context.instance_exec(self) do |loader|
-					file_list.each do |file|
-						loader.send :get_file, :require, "#{root}/#{file}", logger
-					end
-				end
+				logger.info = 'pre-loading files' if logger				
+				file_list.each do |file|
+					wrap context, "#{root}/#{file}", :require, logger
+				end				
 			end
 
 			private 
@@ -56,14 +54,14 @@ module BPS
 					end	
 				end
 
-				def wrap context, file, method
+				def wrap context, file, method,logger=nil
 					context.instance_exec(self) do |loader|
-						loader.send :get_file, method, file, loader.logger
+						loader.send :get_file, method, file, (logger || loader.logger)
 					end	
 				end
-				def get_file method, file, logger=nil
+				def get_file method, file,context, logger=nil
 					l = logger || self.logger || nil
-					if self.send method, file
+					if context.send method, file
 						if l
 							msg = "loaded #{File.basename(file,'.rb')}"
 							puts msg

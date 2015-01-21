@@ -6,7 +6,6 @@ require 'yui/compressor'
 require 'sass'
 require 'yaml'
 require 'json'
- 
 
 
 root = "#{File.dirname(File.realpath(__FILE__))}/bps.org"

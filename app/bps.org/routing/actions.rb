@@ -5,10 +5,9 @@ module BPS
 
 				include  Covered
 				set_logger Log.logger
-
 				cover do
 					def self.registered app
-						app.get '/' do
+						app.get :root do
 							erb :index
 						end
 					end

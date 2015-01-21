@@ -4,6 +4,7 @@ module BPS
 			module Api 
 
 				include  Covered
+				
 				set_logger Log.logger
 
 				cover do

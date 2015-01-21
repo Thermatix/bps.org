@@ -1,5 +1,5 @@
 module BPS
-	class App < ::Sinatra::Base
+	class App < Sinatra_Mod
 		include Sinatra_Register
 		include Covered
 		include Settings
@@ -28,7 +28,7 @@ module BPS
 
 
 		  	register_modules :helpers, Info[:helpers],Log.logger
-		  	register_modules :register,Info[:routing],Log.logger
+		  	register_modules :register,Info[:register],Log.logger
 
 		  	# alias_method :h, :escape_html
 

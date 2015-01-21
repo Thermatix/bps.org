@@ -4,7 +4,7 @@ module BPS
 
 			def check_const const
 			  	if const.split('::').first == 'App'
-			  		Sinatra.const_get(const)
+			  		::Sinatra.const_get(const)
 			  	else
 			  		::Sinatra.const_get(const)
 			  	end
