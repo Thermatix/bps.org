@@ -1,7 +1,6 @@
-require_relative 'lib/ibase'
 
 module BPS
-	class Info < Base::IBase
+	class Info < Zeeb::Base::Info
 		set :version, '0.0.0'
 		set :name, 'Barking Photographic Society Website'
 		set :short_name, 'BPS.org'
@@ -13,7 +12,7 @@ module BPS
 		set :port, '3000'
 		set :logfile, "#{self[:p_root]}/#{self[:short_name]}.log"
 		set :helpers, %w( FormHelpers 
-						  App::Helpers 
+						  Helpers 
 						  Rack::Utils
 						)
 		set :register, %w( Namespace 

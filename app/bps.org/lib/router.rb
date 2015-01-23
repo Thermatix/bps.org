@@ -1,4 +1,4 @@
-module BPS
+module Zeeb	
 	class Routes
 		class << self
 			def define &scipt
@@ -26,7 +26,8 @@ module BPS
 	end
 
 
- 	class Sinatra_Mod < ::Sinatra::Base
+ 	class App < ::Sinatra::Base
+		
 		class << self
 
 		 	def get(*args)args[0]=check(args.first);super(*args);end

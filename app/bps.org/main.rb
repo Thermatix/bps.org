@@ -1,8 +1,5 @@
 module BPS
-	class App < Sinatra_Mod
-		include Sinatra_Register
-		include Covered
-		include Settings
+	class App < Zeeb::App		include Settings
 		set_logger Log.logger
 
 		cover :fatal do

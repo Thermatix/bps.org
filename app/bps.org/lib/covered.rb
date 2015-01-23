@@ -1,5 +1,5 @@
 
-module BPS
+module Zeeb	
 	module Covered
 		module Singleton_Methods
 
@@ -38,5 +38,8 @@ module BPS
 	    	%w(included)
 	  	end
 
+	end
+	class Zeeb < ::Sinatra::Base
+		include Covered
 	end
 end

@@ -1,6 +1,6 @@
 
 module Sinatra
-	module App
+	module App_Modules 
 		module Helpers
 
 			def render(*args)
@@ -18,8 +18,7 @@ module Sinatra
 			end
 
 		end
-
 	end
-	register App::Helpers
+	register App_Modules::Helpers
 end
 

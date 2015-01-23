@@ -10,10 +10,10 @@ require 'json'
 
 root = "#{File.dirname(File.realpath(__FILE__))}/bps.org"
 require "#{root}/lib/loader"
-BPS::Loader.pre_load self,root, %w( info lib/logging lib/covered )
+Zeeb::Loader.pre_load self, 'info'
 
 module BPS
-	include Covered
+	include Zeeb::Covered
 	Log.create Info[:short_name],Info[:logfile]
 	set_logger Log.logger
 	cover :fatal do
@@ -23,11 +23,11 @@ module BPS
 			'loading files...'
 		]
 		
-		Loader.set_up Info[:root], Log.logger 
-		Loader.get_list %w(lib models helpers routing)
-		Loader.append_file 'settings'
-		Loader.append_file 'main'
-		Loader.require_files self
+		Zeeb::Loader.set_up Log.logger 
+		Zeeb::Loader.get_list # change this to use the auto_paths 
+		Zeeb::Loader.append_file 'settings'
+		Zeeb::Loader.append_file 'main'
+		Zeeb::Loader.require_files self
 
 		Log[:info] = [
 			'File loading finished',

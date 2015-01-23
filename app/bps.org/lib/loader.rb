@@ -1,12 +1,14 @@
-module BPS
+module Zeeb	
 	class Loader
+		@paths = {}
+		@pre_loaded = []
 		class << self
 			attr_accessor :logger, :files, :root
-		
-			def set_up  root, logger
+			def set_up logger
 				self.logger = logger
 				self.root = root
 				self.files = []
+				@paths = auto_paths
 			end
 
 			def get_list folder_list
@@ -35,30 +37,56 @@ module BPS
 			end
 			
 			def reload_file file,context
-				wrap context, file, :load
+				get_file :load, file, context
 			end
 
-			def pre_load context,root, file_list, logger=nil
+			def pre_load context,*files
 				puts 'pre-loading files'
-				logger.info = 'pre-loading files' if logger				
-				file_list.each do |file|
-					wrap context, "#{root}/#{file}", :require, logger
-				end				
+				root = File.dirname(File.realpath(__FILE__))	
+				%w( logging info  covered ).each do |file|
+					get_file :require, 
+					File.expand_path("#{root}/#{file}"), 
+					context
+				end	
+				@paths[:initializers] = get_folder 'initializers'
+				
+				files.each do |file|
+					@pre_loaded.push file
+					get_file :require, 
+					"#{@paths[:initializers]}/#{file}", 
+					context
+				end			
 			end
 
 			private 
 
+			def auto_paths
+				Dir.chdir(Dir.pwd) do
+					%w(lib 
+						initializers 
+						helpers 
+						models 
+						controllers
+					).inject({}) do |result,folder|
+						result[folder.to_sym] = get_folder folder
+						result
+					end
+				end
+			end
+
+			def get_folder folder
+				Dir.chdir(Dir.pwd) do
+					File.expand_path(Dir.glob("./**/**/#{folder}").first)
+				end
+			end
+
 				def get_files method, context
 					self.files.each do |file|
-						wrap context,file,method
+						get_file method, file, context
 					end	
 				end
 
-				def wrap context, file, method,logger=nil
-					context.instance_exec(self) do |loader|
-						loader.send :get_file, method, file, (logger || loader.logger)
-					end	
-				end
+
 				def get_file method, file,context, logger=nil
 					l = logger || self.logger || nil
 					if context.send method, file

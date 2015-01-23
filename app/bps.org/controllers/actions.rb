@@ -1,6 +1,5 @@
 module BPS
-	module Sinatra
-		module App
+	class App < Zeeb::App		# module Routing
 			module Actions
 
 				include  Covered
@@ -14,6 +13,6 @@ module BPS
 				end
 
 			end
-		end
+		# end
 	end
 end

@@ -1,10 +1,10 @@
-module BPS
+module Zeeb
 	module Sinatra_Register
 		module Singleton_Methods
 
 			def check_const const
 			  	if const.split('::').first == 'App'
-			  		::Sinatra.const_get(const)
+			  		BPS.const_get(const)
 			  	else
 			  		::Sinatra.const_get(const)
 			  	end
@@ -20,8 +20,6 @@ module BPS
 				end
 			end
 
-
-
 		end
 
 		def self.included(base)
@@ -31,5 +29,8 @@ module BPS
 		def self.includes_hooks?
 	    	%w(included)
 	  	end
+	end
+	class Zeeb < ::Sinatra::Base
+		include Sinatra_Register
 	end
 end

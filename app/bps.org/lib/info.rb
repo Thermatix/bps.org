@@ -1,6 +1,6 @@
-module BPS
+module Zeeb	
 	module Base
-		class IBase
+		class Info
 			
 			module Singleton_Methods
 
